@@ -27,7 +27,7 @@ public class AnimatedSprite : MonoBehaviour
             frame = 0; //flame을 0으로 초기화 시켜줘요.
         }
 
-        if (frame >= 0 && frame < sprites.Length) // 현재 frame 이 0보다 크고 sprite의 크기보다 작다면
+        if (frame >= 0 && frame < sprites.Length) // 현재 frame 이 0보다 크거나 같고 sprite의 크기보다 작다면
         {
             spriteRenderer.sprite = sprites[frame]; // Sprite를 변경해줘요.
         }
