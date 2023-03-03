@@ -16,6 +16,9 @@ public class GameManager : MonoBehaviour
     public float gameSpeedIncrease = 0.1f; // 게임 스피드를 점점 높이도록 하기 위한 변수[난이도 조절용]
     public float gameSpeed { get; private set; } // 게임의 스피드를 호출할 수 있게 프로퍼티로 선언!
 
+    private Player player; // Player 스크립트
+    private Spawner spawner; // Spawner 스크립트
+
     private void Awake()// 게임을 처음 셋팅할 때
     {
         if(Instance == null) //게임매니저가 없으면!
@@ -39,12 +42,35 @@ public class GameManager : MonoBehaviour
 
     public void Start()
     {
+        player = FindObjectOfType<Player>(); //Player 데이터 타입을 찾아서 넣어줘요.
+        spawner = FindObjectOfType<Spawner>(); // Spawner 데이터 타입을 찾아서 넣어줘요.
+
         NewGame();   // 처음 시작하면 새로운 게임의 스피드를 호출
     }
 
     private void NewGame()
     {
+        Obstacle[] obstacles = FindObjectsOfType<Obstacle>(); //원래 있던 장애물들을 찾아서 다시 넣어줘요.
+
+        foreach(var obstacle in obstacles) 
+        {
+            Destroy(obstacle.gameObject); //모든 장애물을 비워줘야해요.
+        }
+
         gameSpeed = initialGameSpeed; // 기본 게임 스피드 
+        enabled = true; // 게임매니저를 활성화 시켜요.
+
+        player.gameObject.SetActive(true); //Player 를 활성화 시켜요.
+        spawner.gameObject.SetActive(true); // Spawner 를 활성화 시켜요.
+    }
+    
+    public void GameOver() // 게임이 끝났다!
+    {
+        gameSpeed = 0f; //게임의 스피드를 초기화 시켜요.
+        enabled = false; // 게임매니저를 비활성화 시켜요.
+
+        player.gameObject.SetActive(false); // Player를 비활성화 시켜요.
+        spawner.gameObject.SetActive(false); // Spawner를 비활성화 시켜요.
     }
 
     private void Update()

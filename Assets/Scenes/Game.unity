@@ -362,7 +362,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf9357a99c4eefd4bb7df027f665453e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  obstacleObjects: []
+  obstacleObjects:
+  - obstaclePrefab: {fileID: 3281919380173752361, guid: 6e6df27bbaad97844817a6178a5c4dcc, type: 3}
+    spawnChance: 0.2
+  - obstaclePrefab: {fileID: 3930825446623694939, guid: 86a2892ba76519542b51472f7cb61270, type: 3}
+    spawnChance: 0.18
+  - obstaclePrefab: {fileID: 844613266640928475, guid: 39fc7bc425837fc49b73dd09090f478a, type: 3}
+    spawnChance: 0.16
+  - obstaclePrefab: {fileID: 399348254319093657, guid: d986501941cac3f4c94c2657a3b235ea, type: 3}
+    spawnChance: 0.14
+  - obstaclePrefab: {fileID: 3282665932699939770, guid: ec8a94d12d61ce546a3722ab51482896, type: 3}
+    spawnChance: 0.12
+  - obstaclePrefab: {fileID: 8033574915897393630, guid: 93e920f54e93aab43b59b5cb932883f2, type: 3}
+    spawnChance: 0.1
+  - obstaclePrefab: {fileID: 3197996666967690873, guid: 7d04fc0976ccdb5468f39a3989a730e8, type: 3}
+    spawnChance: 0.05
 --- !u!4 &831922851
 Transform:
   m_ObjectHideFlags: 0
@@ -371,7 +385,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 831922849}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 8, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

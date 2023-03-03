@@ -34,4 +34,12 @@ public class Player : MonoBehaviour
         }
         character.Move(direction * Time.deltaTime); //현재 isGround를 실행하지않을때는 Character Move!
     }
+
+    private void OnTriggerEnter(Collider other) // Box Collider에 부딪혔을 때!
+    {
+        if(other.CompareTag("Obstacle")) // 태그명이 Obstacle이면
+        {
+            GameManager.Instance.GameOver(); // GameManager의 GameOver() 함수를 실행!
+        }
+    }
 }
