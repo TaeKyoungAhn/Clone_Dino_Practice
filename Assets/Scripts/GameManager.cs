@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -16,8 +18,15 @@ public class GameManager : MonoBehaviour
     public float gameSpeedIncrease = 0.1f; // 게임 스피드를 점점 높이도록 하기 위한 변수[난이도 조절용]
     public float gameSpeed { get; private set; } // 게임의 스피드를 호출할 수 있게 프로퍼티로 선언!
 
+    public TextMeshProUGUI gameOverText; // GameOver Text 삽입
+    public TextMeshProUGUI scoreText;  // Score Text 삽입
+    public TextMeshProUGUI hiscoreText; //hiscore Text 삽입
+    public Button retryButton;  // 재시작 버튼
+
     private Player player; // Player 스크립트
     private Spawner spawner; // Spawner 스크립트
+
+    private float score; // Score 값
 
     private void Awake()// 게임을 처음 셋팅할 때
     {
@@ -48,7 +57,7 @@ public class GameManager : MonoBehaviour
         NewGame();   // 처음 시작하면 새로운 게임의 스피드를 호출
     }
 
-    private void NewGame()
+    public void NewGame()
     {
         Obstacle[] obstacles = FindObjectsOfType<Obstacle>(); //원래 있던 장애물들을 찾아서 다시 넣어줘요.
 
@@ -58,10 +67,13 @@ public class GameManager : MonoBehaviour
         }
 
         gameSpeed = initialGameSpeed; // 기본 게임 스피드 
+        score = 0f; //Score 초기화
         enabled = true; // 게임매니저를 활성화 시켜요.
 
         player.gameObject.SetActive(true); //Player 를 활성화 시켜요.
         spawner.gameObject.SetActive(true); // Spawner 를 활성화 시켜요.
+        gameOverText.gameObject.SetActive(false); //Game Over Text 를 비활성화 시켜요.
+        retryButton.gameObject.SetActive(false);  // Retry button 을 비활성화 시켜요.
     }
     
     public void GameOver() // 게임이 끝났다!
@@ -71,10 +83,28 @@ public class GameManager : MonoBehaviour
 
         player.gameObject.SetActive(false); // Player를 비활성화 시켜요.
         spawner.gameObject.SetActive(false); // Spawner를 비활성화 시켜요.
+        gameOverText.gameObject.SetActive(true);  //Game Over Text 를 활성화 시켜요.
+        retryButton.gameObject.SetActive(true);   //Retry button 을 활성화 시켜요.
+
+        UpdateHiScore(); // 최고 스코어 반영!
     }
 
     private void Update()
     {
         gameSpeed += gameSpeedIncrease * Time.deltaTime; // 점점 속도를 올리자요!
+        score += gameSpeed * Time.deltaTime; // 스코어도 같이 올라가요.
+        scoreText.text = Mathf.FloorToInt(score).ToString("D5"); // score 텍스트에 Score의 값을 자릿수에 맞게 넣어줘요.
+    }
+
+    private void UpdateHiScore() // 최고 점수 확인 함수
+    {
+        float hiscore = PlayerPrefs.GetFloat("hiscore", 0); // PlayerPrefs는 데이터를 저장하는 함수에요. 
+                                                            // 간단히 사용하기 편해요.
+        if(score> hiscore) // 스코어가 HiScore 보다 높다면
+        {
+            hiscore = score; //HiScore에 Score 값 대입
+            PlayerPrefs.SetFloat("hiscore", hiscore); // 데이터 저장
+        }
+        hiscoreText.text = Mathf.FloorToInt(hiscore).ToString("D5");// 자릿수를 맞추고 Hiscore 표현
     }
 }
